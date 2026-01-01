@@ -1,28 +1,11 @@
 # Dockerfile for Cloudflare Tunnel Homepage
-# Multi-stage build for optimized production image
-
-# Stage 1: Build stage
-FROM node:18-alpine as builder
+FROM nginx:alpine
 
 WORKDIR /app
 
-# Copy package files first for better caching
-COPY package*.json ./
+COPY index.html /usr/share/nginx/html
+COPY src/ /usr/share/nginx/html/
 
-# Install dependencies including js-yaml for config processing
-RUN npm install js-yaml
-
-# Copy source files
-COPY . .
-
-# Build the application using config.yaml
-RUN node build-index.js || echo "Build script failed, continuing with default files..."
-
-# Stage 2: Production stage
-FROM nginx:alpine
-
-# Copy built files from builder
-COPY --from=builder /app /usr/share/nginx/html
 
 # Copy custom nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
@@ -30,8 +13,6 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Copy cloudflared config (if available)
 COPY cloudflared-config.yml /etc/cloudflared/config.yml 
 
-# Copy build script for runtime config updates
-COPY build-index.js /usr/share/nginx/html/build-index.js
 
 # Expose port
 EXPOSE 80

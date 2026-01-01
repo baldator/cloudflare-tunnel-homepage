@@ -9,16 +9,7 @@ echo "🚀 Starting Cloudflare Tunnel Homepage..."
 
 # Check if config.yaml exists
 if [ -f "/usr/share/nginx/html/config.yaml" ]; then
-    echo "📖 Found config.yaml - generating index.html..."
-    
-    # Run the build script to generate index.html from config.yaml
-    if [ -f "/usr/share/nginx/html/build-index.js" ]; then
-        cd /usr/share/nginx/html
-        node build-index.js
-        echo "✅ index.html generated from config.yaml"
-    else
-        echo "⚠️ build-index.js not found, using default index.html"
-    fi
+    echo "📖 Found config.yaml"
 else
     echo "ℹ️ No config.yaml found, using default configuration"
 fi
