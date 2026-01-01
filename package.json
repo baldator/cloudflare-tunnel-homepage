@@ -22,9 +22,6 @@
   "dependencies": {
     "js-yaml": "^4.1.0"
   },
-  "devDependencies": {
-    "dockerfile-lint": "^0.1.0"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/your-username/cloudflared-homepage.git"
