@@ -28,7 +28,7 @@ COPY --from=builder /app /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy cloudflared config (if available)
-COPY cloudflared-config.yml /etc/cloudflared/config.yml || echo "No cloudflared config found"
+COPY cloudflared-config.yml /etc/cloudflared/config.yml 
 
 # Copy build script for runtime config updates
 COPY build-index.js /usr/share/nginx/html/build-index.js
