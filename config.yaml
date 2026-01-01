@@ -1,0 +1,66 @@
+# Cloudflare Tunnel Homepage Configuration
+# This file allows you to customize the behavior and appearance of your dashboard
+
+# Application Settings
+app:
+  title: "Cloudflare Tunnel Dashboard"  # Title displayed in the header
+  subtitle: "Your applications at a glance"  # Subtitle below the main title
+  refresh_interval: 60000  # Auto-refresh interval in milliseconds (60000 = 60 seconds)
+  debug_mode: false  # Enable debug logging in console
+
+# Cloudflared Configuration
+cloudflared:
+  # Common paths where cloudflared config might be located
+  # The application will try these paths in order
+  config_paths:
+    - "C:\\Program Files\\Cloudflare\\cloudflared\\config.yml"
+    - "C:\\Program Files (x86)\\Cloudflare\\cloudflared\\config.yml"
+    - "/etc/cloudflared/config.yml"
+    - "/usr/local/etc/cloudflared/config.yml"
+    - "~/.cloudflared/config.yml"
+    - "./config.yml"
+  
+  # Custom config path (if specified, this will be used instead of searching)
+  # custom_config_path: "/path/to/your/custom/config.yml"
+
+# UI Customization
+ui:
+  theme:
+    primary_color: "#f38200"  # Cloudflare orange
+    secondary_color: "#0066cc"  # Cloudflare blue
+    background_color: "#f8f9fa"
+    card_background: "#ffffff"
+    text_color: "#333333"
+    text_light: "#666666"
+  
+  layout:
+    apps_per_row: 3  # Number of application cards per row (responsive)
+    card_padding: "20px"  # Padding inside application cards
+    border_radius: "8px"  # Border radius for cards and buttons
+
+# Features
+features:
+  search_enabled: true  # Enable/disable search functionality
+  stats_enabled: true  # Enable/disable statistics display
+  auto_refresh_enabled: true  # Enable/disable auto-refresh
+  copy_to_clipboard_enabled: true  # Enable/disable copy URL buttons
+  
+# Application Status Settings
+status:
+  active_text: "Active"  # Text for active applications
+  inactive_text: "Inactive"  # Text for inactive applications
+  active_color: "#28a745"  # Color for active status
+  inactive_color: "#dc3545"  # Color for inactive status
+
+# Custom Applications (optional)
+# These will be displayed in addition to applications found in cloudflared config
+custom_applications:
+  # - name: "Custom App"
+  #   url: "https://custom.your-domain.com"
+  #   local_service: "http://localhost:3001"
+  #   status: "active"
+
+# Footer Settings
+footer:
+  text: "Cloudflare Tunnel Dashboard | Auto-refresh every {interval} seconds"
+  show_version: true  # Show version information in footer

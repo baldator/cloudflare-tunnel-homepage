@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  # Cloudflare Tunnel Homepage
+  homepage:
+    build: .
+    container_name: cloudflared-homepage
+    ports:
+      - "8080:80"
+    volumes:
+      - ./data/config.yaml:/usr/share/nginx/html/config.yaml
+      - ./data/cloudflared-config:/etc/cloudflared
+    environment:
+      - TZ=UTC
+    restart: unless-stopped
+    networks:
+      - cloudflare-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Cloudflared Tunnel
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared-tunnel
+    command: tunnel --config /etc/cloudflared/config.yml run
+    volumes:
+      - ./data/cloudflared-config:/etc/cloudflared
+    environment:
+      - TZ=UTC
+    restart: unless-stopped
+    networks:
+      - cloudflare-network
+    depends_on:
+      - homepage
+
+# Shared network for communication between services
+networks:
+  cloudflare-network:
+    driver: bridge

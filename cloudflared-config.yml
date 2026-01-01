@@ -1,0 +1,44 @@
+# Cloudflared Configuration Example
+# This file should be placed in the cloudflared-config volume
+# and will be shared between the homepage and cloudflared containers
+
+# Tunnel configuration
+tunnel: your-tunnel-id-or-name
+credentials-file: /etc/cloudflared/credentials.json
+
+# Ingress rules - these define which local services are exposed
+# The homepage will parse these rules to display available applications
+ingress:
+  # Example 1: Web application
+  - hostname: web.your-domain.com
+    service: http://localhost:3000
+  
+  # Example 2: API service  
+  - hostname: api.your-domain.com
+    service: http://localhost:8080
+  
+  # Example 3: Admin dashboard
+  - hostname: admin.your-domain.com
+    service: http://localhost:8000
+  
+  # Example 4: Database admin
+  - hostname: db.your-domain.com
+    service: http://localhost:5432
+  
+  # Example 5: Monitoring system
+  - hostname: monitor.your-domain.com
+    service: http://localhost:9090
+
+# Optional: Additional tunnel configuration
+warp-routing:
+  enabled: true
+
+# Logging configuration
+logfile: /var/log/cloudflared.log
+loglevel: info
+
+# Metrics endpoint (optional)
+metrics: 0.0.0.0:2000
+
+# Graceful shutdown
+grace-period: 30s

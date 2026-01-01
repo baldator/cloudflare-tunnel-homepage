@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{APP_TITLE}}</title>
+    <link rel="stylesheet" href="src/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: {{PRIMARY_COLOR}};
+            --secondary-color: {{SECONDARY_COLOR}};
+            --background-color: {{BACKGROUND_COLOR}};
+            --card-bg: {{CARD_BACKGROUND}};
+            --text-color: {{TEXT_COLOR}};
+            --text-light: {{TEXT_LIGHT}};
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-cloud"></i> {{APP_TITLE}}</h1>
+            <p class="subtitle">{{APP_SUBTITLE}}</p>
+        </header>
+        
+        <main>
+            <div class="controls">
+                <button id="refresh-btn" class="btn"><i class="fas fa-sync-alt"></i> Refresh</button>
+                <div class="config-path">
+                    <span>Config: </span>
+                    <span id="config-path-display">Loading...</span>
+                </div>
+            </div>
+            
+            <div class="stats" {{STATS_ENABLED}}>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-server"></i></div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="total-apps">0</div>
+                        <div class="stat-label">Applications</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-globe"></i></div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="active-apps">0</div>
+                        <div class="stat-label">Active</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="search-bar" {{SEARCH_ENABLED}}>
+                <input type="text" id="search-input" placeholder="Search applications...">
+                <i class="fas fa-search"></i>
+            </div>
+            
+            <div class="apps-grid" id="apps-grid">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading applications...</p>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>{{FOOTER_TEXT}}</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Configuration from config.yaml
+        window.AppConfig = {
+            app: {
+                refresh_interval: {{REFRESH_INTERVAL}}
+            },
+            status: {
+                active_text: '{{ACTIVE_TEXT}}',
+                inactive_text: '{{INACTIVE_TEXT}}'
+            },
+            features: {
+                search_enabled: {{SEARCH_ENABLED}},
+                stats_enabled: {{STATS_ENABLED}},
+                copy_to_clipboard_enabled: {{COPY_ENABLED}}
+            }
+        };
+    </script>
+    
+    <script src="src/js/config.js"></script>
+    <script src="src/js/main.js"></script>
+</body>
+</html>
