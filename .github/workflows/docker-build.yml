@@ -1,6 +1,7 @@
 name: Simple Docker Build
 
 on:
+  # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [ main, master ]
     paths:
@@ -15,21 +16,31 @@ on:
 
 jobs:
   build:
-    name: Build Docker Image
+    name: Build and Push Docker Image
     runs-on: ubuntu-latest
     
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build Docker image
+      - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
-          tags: cloudflared-homepage:latest
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}:latest
+            ghcr.io/${{ github.repository }}:${{ github.sha }}
           outputs: type=docker,dest=/tmp/cloudflared-homepage.tar
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -40,6 +51,8 @@ jobs:
           name: cloudflared-homepage-docker-image
           path: /tmp/cloudflared-homepage.tar
           retention-days: 7
+
+      
 
       - name: Test image locally
         run: |
