@@ -4,7 +4,7 @@ FROM nginx:alpine
 WORKDIR /app
 
 COPY index.html /usr/share/nginx/html
-COPY src/ /usr/share/nginx/html/
+COPY src/ /usr/share/nginx/html/src/
 
 
 # Copy custom nginx configuration
